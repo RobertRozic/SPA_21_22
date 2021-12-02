@@ -52,7 +52,6 @@ struct lista {
     return counter;
   }
   
-  
   // Provjera je li lista prazna
   bool isEmpty() {
       if (first == NULL)
@@ -86,6 +85,52 @@ struct lista {
       zadnji->next = novi;
       // Novi zadnji element pokazuje na NULL
       novi->next = NULL;
+  }
+  
+  Person* get(int position) {
+    if (position < 0 || position > this->size())
+      return NULL;
+
+    Person* iterator = this->first;
+
+    int counter = 0;
+    while (counter++ < position) {
+      iterator = iterator->next;
+    }
+
+    return iterator;
+  }
+
+  void remove(int position) {
+      Person* previous = this->get(position-1);
+      Person* to_remove = this->get(position);
+
+      if (previous == NULL) {
+        this->first = to_remove->next;
+      } else {
+        previous->next = to_remove->next;
+      }
+      
+      delete to_remove;
+  }
+
+  void add(Person* new_person, int position = -1) {
+      if (position == -1) {
+        add_to_end(new_person);
+        return;
+      }
+
+      Person* previous = this->get(position-1);
+      
+      if (previous == NULL) { // position == 0
+        this->add_to_start(new_person);
+        return;
+      }
+      
+      // Novi pokazuje na ono sto je pokazivao prethodni
+      new_person->next = previous->next;
+      // Prethodni pokazuje na novi
+      previous->next = new_person;
   }
 };
 
