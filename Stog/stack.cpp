@@ -67,6 +67,33 @@ struct stack {
     
     return last;
   }
+  
+    void printOld() {
+    if (this->isEmpty())
+      return;
+
+    Book* iterator = this->first;
+
+    cout << iterator->name << endl;
+
+    while(iterator->next != NULL) {
+      iterator = iterator->next;
+      cout << iterator->name << endl;
+    }
+  }
+
+  void print() {
+    if (this->isEmpty())
+      return;
+
+    Book temp = *this->top();
+
+    cout << temp.name << endl;
+
+    this->pop();
+
+    this->print();
+  }
 };
 
 
